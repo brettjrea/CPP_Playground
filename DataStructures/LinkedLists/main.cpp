@@ -1,23 +1,22 @@
-
-// Iterative C++ program to search
+// Recursive C++ program to search
 // an element in linked list
 #include <bits/stdc++.h>
 using namespace std;
  
 /* Link list node */
-class Node {
-public:
+struct Node {
     int key;
-    Node* next;
+    struct Node* next;
 };
  
 /* Given a reference (pointer to pointer) to the head
 of a list and an int, push a new node on the front
 of the list. */
-void push(Node** head_ref, int new_key)
+void push(struct Node** head_ref, int new_key)
 {
     /* allocate node */
-    Node* new_node = new Node();
+    struct Node* new_node
+        = (struct Node*)malloc(sizeof(struct Node));
  
     /* put in the key */
     new_node->key = new_key;
@@ -30,22 +29,25 @@ void push(Node** head_ref, int new_key)
 }
  
 /* Checks whether the value x is present in linked list */
-bool search(Node* head, int x)
+bool search(struct Node* head, int x)
 {
-    Node* current = head; // Initialize current
-    while (current != NULL) {
-        if (current->key == x)
-            return true;
-        current = current->next;
-    }
-    return false;
+    // Base case
+    if (head == NULL)
+        return false;
+ 
+    // If key is present in current node, return true
+    if (head->key == x)
+        return true;
+ 
+    // Recur for remaining list
+    return search(head->next, x);
 }
  
 /* Driver code*/
 int main()
 {
     /* Start with the empty list */
-    Node* head = NULL;
+    struct Node* head = NULL;
     int x = 21;
  
     /* Use push() to construct below list
@@ -61,4 +63,4 @@ int main()
     return 0;
 }
  
-// This is code is contributed by rathbhupendra
+// This code is contributed by SHUBHAMSINGH10
